@@ -1,4 +1,3 @@
-drop database db_pizza;
 CREATE DATABASE IF NOT EXISTS db_pizza;
 USE db_pizza;
 
