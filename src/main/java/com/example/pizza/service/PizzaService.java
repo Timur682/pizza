@@ -1,10 +1,11 @@
 package com.example.pizza.service;
 
 import com.example.pizza.repository.PizzaRepository;
-import models.Pizza;
+import com.example.pizza.entity.Pizza;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PizzaService {
@@ -19,7 +20,7 @@ public class PizzaService {
         return pizzaRepository.findAll();
     }
 
-    public Pizza getPizzaById(long id) {
+    public Pizza getPizzaById(Long id) {
         return pizzaRepository.findById(id).orElse(null);
     }
 
@@ -35,7 +36,15 @@ public class PizzaService {
         }
     }
 
-    public void deletePizza(long id) {
-        pizzaRepository.deleteById(id);
+    public Pizza deletePizza(long id) {
+        Optional<Pizza> pizzaOptional = pizzaRepository.findById(id);
+        if (pizzaOptional.isPresent()) {
+            Pizza pizza = pizzaOptional.get();
+            pizzaRepository.deleteById(id);
+            return pizza; // Return the deleted pizza
+        } else {
+            return null; // Return null if the pizza with the specified ID does not exist
+        }
     }
+
 }

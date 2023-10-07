@@ -1,4 +1,4 @@
-package models;
+package com.example.pizza.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -9,10 +9,10 @@ import org.springframework.data.annotation.Id;
 
 import java.math.BigDecimal;
 
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Getter
 @Setter
 @Entity
 @Table(name = "pizza")
@@ -21,20 +21,24 @@ public class Pizza {
     @jakarta.persistence.Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long  id;
 
     @NotBlank
+    @Column(name = "name")
     private String name;
 
     @NotNull
+    @Column(name = "image")
+    private String image;
+
+    @NotNull
     @Positive
+    @Column(name = "price")
     private BigDecimal price;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @NotNull
+    @Column(name = "description")
+    private String description;
 
-    public Long getId() {
-        return id;
-    }
+
 }

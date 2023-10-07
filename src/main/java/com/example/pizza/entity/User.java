@@ -1,4 +1,4 @@
-package models;
+package com.example.pizza.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -6,58 +6,55 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.springframework.data.annotation.Id;
 
+import java.util.HashSet;
 import java.util.Set;
 
-@NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@NoArgsConstructor
+@Builder
 @Getter
 @Setter
+@ToString
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User {
-    @jakarta.persistence.Id
     @Id
+    @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username", unique = true)
+    @Column(name = "username", length = 50, unique = true)
     @NotNull
-    @Size(min = 2, max = 50)
+    @Size(min = 2)
     private String username;
 
     @Column(name = "password")
     @NotNull
-    @Size(min = 6, max = 20)
+    @Size(min = 5)
     private String password;
 
+    @Getter
     @Column(name = "email", unique = true)
     @NotNull
     @Email(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}",
             flags = Pattern.Flag.CASE_INSENSITIVE)
     private String email;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @JoinTable(
+            name = "user_roles",
+            joinColumns =
+            @JoinColumn(name = "user_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns =
+            @JoinColumn(name = "role_id",
+                    referencedColumnName = "id"
+            )
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
+    )    private Set<Role> roles = new HashSet<>();
 
 
 }

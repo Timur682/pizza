@@ -1,13 +1,13 @@
-package controller;
+package com.example.pizza.controller;
 
 import com.example.pizza.repository.UserRepository;
-import models.User;
+import com.example.pizza.entity.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/v1/users")
 public class UserController {
     private final UserRepository userRepository;
 

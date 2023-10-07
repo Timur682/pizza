@@ -1,0 +1,11 @@
+[Unit]
+Description=Spring Boot on Droplets
+After=network.target
+StartLimitIntervalSec=0
+[Service]
+Restart=always
+RestartSec=1
+User=root
+ExecStart=/usr/bin/java -jar /pizza/Pizza.jar
+[Install]
+WantedBy=multi-user.target

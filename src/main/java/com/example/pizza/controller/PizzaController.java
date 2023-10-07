@@ -1,8 +1,11 @@
-package controller;
+package com.example.pizza.controller;
 
 import com.example.pizza.service.PizzaService;
-import models.Pizza;
+import com.example.pizza.entity.Pizza;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -10,17 +13,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/pizzas")
+@RequiredArgsConstructor
+@SecurityRequirement(name = "Bearer Authentication")
 public class PizzaController {
 
     private final PizzaService pizzaService;
 
-    public PizzaController(PizzaService pizzaService) {
-        this.pizzaService = pizzaService;
-    }
-
-    @GetMapping
-    public List<Pizza> getPizzas() {
-        return pizzaService.getAllPizzas();
+    @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Pizza> createPizza(@RequestBody Pizza pizza) {
+        Pizza createdPizza = pizzaService.createPizza(pizza);
+        return ResponseEntity.created(URI.create("/api/v1/pizzas/" + createdPizza.getId())).body(createdPizza);
     }
 
     @GetMapping("/{id}")
@@ -31,12 +34,6 @@ public class PizzaController {
         } else {
             return ResponseEntity.notFound().build();
         }
-    }
-
-    @PostMapping
-    public ResponseEntity<Pizza> createPizza(@RequestBody Pizza pizza) {
-        Pizza createdPizza = pizzaService.createPizza(pizza);
-        return ResponseEntity.created(URI.create("/api/pizzas/" + createdPizza.getId())).body(createdPizza);
     }
 
     @PutMapping("/{id}")
@@ -52,8 +49,16 @@ public class PizzaController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePizza(@PathVariable("id") long id) {
-        pizzaService.deletePizza(id);
-        return ResponseEntity.noContent().build();
+        Pizza deleted = pizzaService.deletePizza(id);
+        if (deleted == null) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping
+    public List<Pizza> getPizzas() {
+        return pizzaService.getAllPizzas();
     }
 }
-

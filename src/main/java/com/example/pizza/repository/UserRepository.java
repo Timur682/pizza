@@ -1,20 +1,19 @@
 package com.example.pizza.repository;
 
-import models.User;
+import com.example.pizza.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    User save(User user);
-    User findByUsername(String username);
 
-    boolean existsByUsername(String username);
+    Optional<User>  findByUsername(String username);
 
-    User findById(long id);
+    Optional<User> findUserByEmailIgnoreCase(String email);
 
-    User update(User user);
 
-    void deleteById(long id);
+
 }
