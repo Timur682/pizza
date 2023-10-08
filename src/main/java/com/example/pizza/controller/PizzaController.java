@@ -23,7 +23,7 @@ public class PizzaController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Pizza> createPizza(@RequestBody Pizza pizza) {
         Pizza createdPizza = pizzaService.createPizza(pizza);
-        return ResponseEntity.created(URI.create("/api/v1/pizzas/" + createdPizza.getId())).body(createdPizza);
+        return ResponseEntity.created(URI.create("/api/pizzas/" + createdPizza.getId())).body(createdPizza);
     }
 
     @GetMapping("/{id}")
@@ -51,11 +51,16 @@ public class PizzaController {
     public ResponseEntity<Void> deletePizza(@PathVariable("id") long id) {
         Pizza deleted = pizzaService.deletePizza(id);
         if (deleted == null) {
-            return ResponseEntity.noContent().build();
-        } else {
             return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok().build();
         }
     }
+
+
+
+
+
 
     @GetMapping
     public List<Pizza> getPizzas() {

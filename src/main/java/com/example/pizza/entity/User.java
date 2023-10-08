@@ -24,16 +24,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Size(max = 255)
     @Column(name = "username", length = 50, unique = true)
     @NotNull
     @Size(min = 2)
     private String username;
 
+    @Size(max = 255)
     @Column(name = "password")
     @NotNull
     @Size(min = 5)
     private String password;
 
+    @Size(max = 255)
     @Getter
     @Column(name = "email", unique = true)
     @NotNull

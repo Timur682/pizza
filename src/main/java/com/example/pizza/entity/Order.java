@@ -3,6 +3,7 @@ package com.example.pizza.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -21,9 +22,11 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Size(max = 255)
     @Column(name = "name", columnDefinition = "json")
     private String name;
 
+    @Size(max = 255)
     @NotNull
     @Column(name = "customer_name")
     private String customerName;

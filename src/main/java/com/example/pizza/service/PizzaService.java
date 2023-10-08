@@ -2,6 +2,7 @@ package com.example.pizza.service;
 
 import com.example.pizza.repository.PizzaRepository;
 import com.example.pizza.entity.Pizza;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,7 +28,6 @@ public class PizzaService {
     public Pizza createPizza(Pizza pizza) {
         return pizzaRepository.save(pizza);
     }
-
     public Pizza updatePizza(Pizza pizza) {
         if (pizzaRepository.existsById(pizza.getId())) {
             return pizzaRepository.save(pizza);
@@ -36,15 +36,13 @@ public class PizzaService {
         }
     }
 
-    public Pizza deletePizza(long id) {
-        Optional<Pizza> pizzaOptional = pizzaRepository.findById(id);
-        if (pizzaOptional.isPresent()) {
-            Pizza pizza = pizzaOptional.get();
-            pizzaRepository.deleteById(id);
-            return pizza; // Return the deleted pizza
-        } else {
-            return null; // Return null if the pizza with the specified ID does not exist
-        }
+    public Pizza deletePizza(Long id) {
+        Pizza pizza = pizzaRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Pizza with id " + id + " not found")
+        );
+        pizzaRepository.delete(pizza);
+        return pizza;
     }
+
 
 }

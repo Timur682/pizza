@@ -49,6 +49,7 @@ public class SecurityConfig {
                 .addFilterBefore(filter, BasicAuthenticationFilter.class)
                 .csrf().disable()
                 .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers("/api/pizzas/**").permitAll();
                     auth.requestMatchers("/api/v1/auth/**").permitAll();
                     auth.requestMatchers("/api/v1/**").authenticated();
                     auth.anyRequest().permitAll();
