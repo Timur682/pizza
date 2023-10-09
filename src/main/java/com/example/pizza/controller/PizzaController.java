@@ -57,11 +57,6 @@ public class PizzaController {
         }
     }
 
-
-
-
-
-
     @GetMapping
     public List<Pizza> getPizzas() {
         return pizzaService.getAllPizzas();

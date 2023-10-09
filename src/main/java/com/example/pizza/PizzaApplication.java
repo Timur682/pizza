@@ -34,8 +34,8 @@ public class PizzaApplication implements CommandLineRunner {
 	public void run(String... args) {
 		if (userRepository.findAll().isEmpty()) {
 			// Создание ролей
-			var roleUser = roleRepository.save(Role.builder().name("ROLE_USER").build());
-			var roleAdmin = roleRepository.save(Role.builder().name("ROLE_ADMIN").build());
+			var roleUser = roleRepository.save(Role.builder().name("USER").build());
+			var roleAdmin = roleRepository.save(Role.builder().name("ADMIN").build());
 
 // Создание пользователей
 			var admin = User.builder()

@@ -39,6 +39,7 @@ public class JwtTokenProvider {
                 .signWith(mSecret, SignatureAlgorithm.HS256)
                 .compact();
     }
+
     public boolean validateToken(String jwt) {
         try {
             Jwts
@@ -46,12 +47,12 @@ public class JwtTokenProvider {
                     .setSigningKey(mSecret)
                     .build()
                     .parseClaimsJws(jwt);
-        }catch (ExpiredJwtException e){
+        } catch (ExpiredJwtException e) {
             throw new BadRequestException("Token", "Expired");
-        }catch (MalformedJwtException e){
+        } catch (MalformedJwtException e) {
             throw new BadRequestException("Token", "Invalid");
-        }catch (JwtException e){
-            throw new BadRequestException("Token", "Exception" + e.getMessage());
+        } catch (JwtException e) {
+            throw new BadRequestException("Token", "Exception " + e.getMessage());
         }
         return true;
     }
