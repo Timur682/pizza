@@ -30,13 +30,11 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         var configuration = new CorsConfiguration();
-        //configuration.setAllowedOriginPatterns(
-        // List.of("http://localhost:3000", "http://localhost:8080", "http://127.0.0.1:3000")
-        //);
+
         configuration.setAllowedOriginPatterns(List.of("*"));
-        //configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+
         configuration.setAllowedMethods(List.of("*"));
-        //configuration.setAllowedHeaders(List.of(HttpHeaders.AUTHORIZATION));
+
         configuration.setAllowedHeaders(List.of("*"));
         var source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
