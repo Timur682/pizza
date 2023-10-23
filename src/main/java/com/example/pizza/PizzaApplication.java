@@ -28,6 +28,7 @@ public class PizzaApplication implements CommandLineRunner {
 
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(PizzaApplication.class, args);
+
 	}
 
 	@Override
