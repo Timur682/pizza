@@ -28,7 +28,7 @@ Pizza Delivery System is a web application for managing pizzas, designed for piz
 
 1. Clone the repository:
 
-- git clone https://github.com/Timur682/pizza)https://github.com/Timur682/pizza
+- git clone https://github.com/Timur682/pizza
 - cd backend
 - ./mvnw spring-boot:run
 
