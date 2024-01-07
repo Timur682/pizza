@@ -32,8 +32,6 @@ Pizza Delivery System is a web application for managing pizzas, designed for piz
 - cd backend
 - ./mvnw spring-boot:run
 
-2. Open your browser and go to http://localhost:3000 to access the application.
-
 Usage
 Log in as an administrator.
 Manage pizza items in the admin panel.
